@@ -16,7 +16,8 @@ public class Greetings2 extends JPanel {
    }
    
    public void paintComponent (Graphics g) {
-      this.newDrawRect2(g, 10, 10, 50, 50);
+      this.safeDrawRect(g, 10, 10, 1000, 1000);
+      this.safeDrawRect(g, 2, 5, 19, 29);
    }
 
    public void newDrawLine(Graphics g, int x, int y, int x1, int y1){
@@ -36,8 +37,17 @@ public class Greetings2 extends JPanel {
    // Step 26 This method takes top-left x, top-left y, bottom-right x, bottom-right y to define
    //  a rectangle.  It should take drawRect.
    public void newDrawRect2(Graphics g, int tlx, int tly, int brx, int bry) {
-      this.newDrawRect(g, tlx, tly, brx, bry);
+      this.newDrawRect(g, tlx, tly, brx-tlx, bry-tly);
    }
 
+   public void safeDrawRect(Graphics g, int tlx, int tly, int brx, int bry) {
+      int maxX = this.getSize().width;
+      int maxY  = this.getSize().height;
+      if(tlx >=0 && tly>=0 && brx <= maxX && bry <= maxY){
+         this.newDrawRect(g, tlx, tly, brx-tlx, bry-tly);
+      } else {
+         System.out.println("You are off the screen!");
+      }
+   }
    
 }
